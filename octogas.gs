@@ -3,7 +3,7 @@
 //
 
 // An Array of teams I'm on. Eg ["@myorg/myteam"]
-var my_teams   = ["@github/security", "@github/dotcom-security", "@github/2fa"]
+var my_teams   = []
 
 // The base label to create repo labels under.
 var base_label = ["GitHub"]
