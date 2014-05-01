@@ -1,5 +1,5 @@
 # An Array of teams I'm on. Eg ["@myorg/myteam"]
-MY_TEAMS   = ["@github/security", "@github/dotcom-security", "@github/2fa"]
+MY_TEAMS   = []
 
 # Base label name to apply to nest all other labels under.
 BASE_LABEL = ["GitHub"]
