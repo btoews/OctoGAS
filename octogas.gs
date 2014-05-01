@@ -318,7 +318,7 @@ Message = (function() {
 
 })();
 
-main = function() {
+function main() {
   Label.loadPersisted();
   Thread.loadFromSearch(QUERY);
   Message.loadReasonsFromCache();
