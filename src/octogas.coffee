@@ -143,11 +143,6 @@ class Thread
   # Returns nothing.
   queueLabel: (name_parts) ->
     name_parts = BASE_LABEL.concat name_parts
-
-    name    = name_parts.join("/")
-    subject = @_thread.getFirstMessageSubject()
-    Logger.log "Applying \"#{name}\" to \"#{subject}\""
-
     label = Label.findOrCreate name_parts
     label.queue @
 
