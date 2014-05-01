@@ -1,4 +1,4 @@
-## OctoGAS - GitHub notifications Google Apps Script
+## GitHub notifications Google Apps Script
 
 Creates/maintains Gmail labels based on GitHub notification metadata.
 
