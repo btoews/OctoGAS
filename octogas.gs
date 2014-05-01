@@ -32,7 +32,7 @@ Label = (function() {
   Label.findOrCreate = function(name_parts) {
     var name;
     if (name_parts.length > 1) {
-      this.findOrCreate(name_parts.slice(1));
+      this.findOrCreate(name_parts.slice(0, name_parts.length - 1));
     }
     name = name_parts.join("/");
     return this.find(name) || new Label(name);

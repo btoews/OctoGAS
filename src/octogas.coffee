@@ -1,5 +1,5 @@
 # An Array of teams I'm on. Eg ["@myorg/myteam"]
-MY_TEAMS   = []
+MY_TEAMS = []
 
 # Base label name to apply to nest all other labels under.
 BASE_LABEL = ["GitHub"]
@@ -33,7 +33,7 @@ class Label
   @findOrCreate: (name_parts) ->
     # Make sure the parent label exists.
     if name_parts.length > 1
-      @findOrCreate(name_parts.slice(1))
+      @findOrCreate(name_parts.slice(0, name_parts.length - 1))
 
     name = name_parts.join "/"
     @find(name) || new Label(name)
