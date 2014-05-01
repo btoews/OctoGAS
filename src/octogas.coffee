@@ -82,8 +82,10 @@ class Label
 
 
 class Thread
-  @all = {}
-  @ids = []
+  @all     = {}
+  @ids     = []
+  @done    = []
+  @doneKey = "octogas:v#{CACHE_VERSION}:threads_done"
 
   # Load threads from a given search query.
   #
@@ -101,7 +103,22 @@ class Thread
   #
   # Returns nothing.
   @labelAllForReason: ->
-    @all[id].labelForReason() for id in @ids
+    @all[id].labelForReason() for id in @ids when !@all[id].alreadyDone()
+
+  # Load a list of Thread ids that have already been labled. Because the ids
+  # are based on the messages in the thread, new messages in a thread will
+  # trigger relabeling.
+  #
+  # Returns nothing.
+  @loadDoneFromCache: ->
+    cached = CACHE.get @doneKey
+    @done = JSON.parse(cached) if cached
+
+  # Save the list of ids that we have already labeled.
+  #
+  # Returns nothing.
+  @dumpDoneToCache: ->
+    CACHE.put @doneKey, JSON.stringify(@ids)
 
   # Instantiate a Thread.
   #
@@ -161,6 +178,12 @@ class Thread
         i--
 
     @_reason
+
+  # Has this thread already been labeled?
+  #
+  # Returns a bool.
+  alreadyDone: ->
+    Thread.done.indexOf(@id) >= 0
 
 
 class Message
@@ -300,8 +323,10 @@ class Message
 main = ->
   Label.loadPersisted()
   Thread.loadFromSearch QUERY
+  Thread.loadDoneFromCache()
   Message.loadReasonsFromCache()
   Thread.labelAllForReason()
   Label.applyAll()
+  Thread.dumpDoneToCache()
   Message.dumpReasonsToCache()
 

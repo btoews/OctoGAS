@@ -97,6 +97,10 @@ Thread = (function() {
 
   Thread.ids = [];
 
+  Thread.done = [];
+
+  Thread.doneKey = "octogas:v" + CACHE_VERSION + ":threads_done";
+
   Thread.loadFromSearch = function(query) {
     var t, threads, _i, _len, _results;
     threads = GmailApp.search(query);
@@ -115,9 +119,23 @@ Thread = (function() {
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       id = _ref[_i];
-      _results.push(this.all[id].labelForReason());
+      if (!this.all[id].alreadyDone()) {
+        _results.push(this.all[id].labelForReason());
+      }
     }
     return _results;
+  };
+
+  Thread.loadDoneFromCache = function() {
+    var cached;
+    cached = CACHE.get(this.doneKey);
+    if (cached) {
+      return this.done = JSON.parse(cached);
+    }
+  };
+
+  Thread.dumpDoneToCache = function() {
+    return CACHE.put(this.doneKey, JSON.stringify(this.ids));
   };
 
   function Thread(_thread) {
@@ -178,6 +196,10 @@ Thread = (function() {
       }
     }
     return this._reason;
+  };
+
+  Thread.prototype.alreadyDone = function() {
+    return Thread.done.indexOf(this.id) >= 0;
   };
 
   return Thread;
@@ -319,8 +341,10 @@ Message = (function() {
 function main() {
   Label.loadPersisted();
   Thread.loadFromSearch(QUERY);
+  Thread.loadDoneFromCache();
   Message.loadReasonsFromCache();
   Thread.labelAllForReason();
   Label.applyAll();
+  Thread.dumpDoneToCache();
   return Message.dumpReasonsToCache();
 };
