@@ -142,7 +142,9 @@ Thread = (function() {
   Thread.prototype.labelForReason = function() {
     var reason;
     reason = this.reason();
-    if (reason.mention) {
+    if (reason.author) {
+      return this.queueLabel(["Author"]);
+    } else if (reason.mention) {
       return this.queueLabel(["Direct Mention"]);
     } else if (reason.team_mention === true) {
       return this.queueLabel(["Team Mention"]);

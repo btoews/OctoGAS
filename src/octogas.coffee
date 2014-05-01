@@ -119,7 +119,9 @@ class Thread
   # Returns nothing.
   labelForReason: ->
     reason = @reason()
-    if reason.mention
+    if reason.author
+      @queueLabel ["Author"]
+    else if reason.mention
       @queueLabel ["Direct Mention"]
     else if reason.team_mention == true
       @queueLabel ["Team Mention"] # Unknown team mentioned
