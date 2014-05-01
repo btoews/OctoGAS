@@ -14,11 +14,11 @@ Adds messages to folders based on the reason for the notification. It will creat
 
 Because Google Apps Scripts run on Google's infrastructure, you will need to set this script up to run on Google Scripts.
 
-- Go [here](https://script.google.com/d/1yTtQ4bGlpsuv3lp0pWLmArzEbya4bvi_ABJ3Jn9NR8iDSAXZSwd3ynjh/edit)
-- Go to "File > Make Copy..."
-- Adjust the `MY_TEAMS` variable to list GitHub teams that you care about.
-- Go to "Resources > Current Project's Triggers"
-- Create a new trigger to run the `main` function however often you want.
+1. Go [here](https://script.google.com/d/1yTtQ4bGlpsuv3lp0pWLmArzEbya4bvi_ABJ3Jn9NR8iDSAXZSwd3ynjh/edit)
+1. Go to "File > Make Copy..."
+1. Adjust the `MY_TEAMS` variable to list GitHub teams that you care about.
+1. Go to "Resources > Current Project's Triggers"
+1. Create a new trigger to run the `main` function however often you want.
 
 ### Hacking
 
