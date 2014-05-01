@@ -12,7 +12,7 @@ Adds messages to folders based on the reason for the notification. It will creat
 
 ### Instalation
 
-- Go to https://script.google.com/d/1yTtQ4bGlpsuv3lp0pWLmArzEbya4bvi_ABJ3Jn9NR8iDSAXZSwd3ynjh/edit
+- Go [here](https://script.google.com/d/1yTtQ4bGlpsuv3lp0pWLmArzEbya4bvi_ABJ3Jn9NR8iDSAXZSwd3ynjh/edit)
 - Go to "File > Make Copy..."
 - Adjust the `MY_TEAMS` variable to list GitHub teams that you care about.
 - Go to "Resources > Current Project's Triggers"
