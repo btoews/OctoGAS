@@ -185,7 +185,7 @@ class Message
   @dumpReasonsToCache: ->
     reasons = {}
     reasons[k] = @all[k].dumpReason() for k in @keys
-    CACHE.putAll reasons, 3600
+    CACHE.putAll reasons
 
   # Instantiate a new Message object.
   #
