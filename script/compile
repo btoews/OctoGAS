@@ -1,0 +1,3 @@
+#!/bin/sh
+
+coffee -csb < ./src/octogas.coffee > octogas.gs
