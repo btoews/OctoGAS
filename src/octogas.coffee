@@ -126,10 +126,13 @@ class Thread
   #
   # Returns nothing.
   constructor: (@_thread) ->
-    @id             = @_thread.getId()
-    @messages       = (new Message(m) for m in @_thread.getMessages())
+    @id = @_thread.getId()
     Thread.all[@id] = @
     Thread.ids.push @id
+    @messages = if mess = @_thread.getMessages()
+      new Message(m) for m in mess
+    else
+      []
 
   # Determine why we got this message and label the thread accordingly.
   #
@@ -254,7 +257,9 @@ class Message
   #
   # Returns an string team name or undefined.
   teamMention: ->
-    @_teamMention ||= (@_message.getPlainBody().match(MY_TEAMS_REGEX) || [])[1]
+    @_teamMention ||= if message = @_message.getPlainBody()
+      if match = message.match(MY_TEAMS_REGEX)
+        match[1]
 
   # Who is this message from.
   #

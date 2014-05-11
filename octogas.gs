@@ -139,21 +139,24 @@ Thread = (function() {
   };
 
   function Thread(_thread) {
-    var m;
+    var m, mess;
     this._thread = _thread;
     this.id = this._thread.getId();
-    this.messages = (function() {
-      var _i, _len, _ref, _results;
-      _ref = this._thread.getMessages();
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        m = _ref[_i];
-        _results.push(new Message(m));
-      }
-      return _results;
-    }).call(this);
     Thread.all[this.id] = this;
     Thread.ids.push(this.id);
+    this.messages = (function() {
+      var _i, _len, _results;
+      if (mess = this._thread.getMessages()) {
+        _results = [];
+        for (_i = 0, _len = mess.length; _i < _len; _i++) {
+          m = mess[_i];
+          _results.push(new Message(m));
+        }
+        return _results;
+      } else {
+        return [];
+      }
+    }).call(this);
   }
 
   Thread.prototype.labelForReason = function() {
@@ -285,7 +288,8 @@ Message = (function() {
   };
 
   Message.prototype.teamMention = function() {
-    return this._teamMention || (this._teamMention = (this._message.getPlainBody().match(MY_TEAMS_REGEX) || [])[1]);
+    var match, message;
+    return this._teamMention || (this._teamMention = (message = this._message.getPlainBody()) ? (match = message.match(MY_TEAMS_REGEX)) ? match[1] : void 0 : void 0);
   };
 
   Message.prototype.from = function() {
