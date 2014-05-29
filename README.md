@@ -10,7 +10,7 @@ Adds messages to folders based on the reason for the notification. It will creat
 - Watched repositories
 - Meta notifications (added to team, SSH key added, etc...)
 
-### Instalation
+### Installation
 
 Because Google Apps Scripts run on Google's infrastructure, you will need to set this script up to run on Google Scripts.
 
