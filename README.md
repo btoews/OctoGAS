@@ -16,7 +16,7 @@ Because Google Apps Scripts run on Google's infrastructure, you will need to set
 
 1. Go [here](https://script.google.com/d/1yTtQ4bGlpsuv3lp0pWLmArzEbya4bvi_ABJ3Jn9NR8iDSAXZSwd3ynjh/edit)
 1. Go to "File > Make Copy..."
-1. Adjust the `MY_TEAMS` variable to list GitHub teams that you care about.
+1. Adjust the `MY_TEAMS` variable to list GitHub teams that you care about. (i.e. ["@myorg/myteam"])
 1. Go to "Resources > Current Project's Triggers"
 1. Create a new trigger to run the `main` function however often you want.
 
