@@ -171,7 +171,7 @@ class Thread
   # Returns an Object where the key is the name of the reason and the value is
   # more information about the reason.
   reason: ->
-    unless @_reason?
+    unless @_reason? || @messages.length == 0
       i = @messages.length - 1
       @_reason = @messages[i].reason()
 
