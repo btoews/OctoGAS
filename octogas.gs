@@ -190,7 +190,7 @@ Thread = (function() {
 
   Thread.prototype.reason = function() {
     var i;
-    if (this._reason == null) {
+    if (!((this._reason != null) || this.messages.length === 0)) {
       i = this.messages.length - 1;
       this._reason = this.messages[i].reason();
       while (this._reason.team_mention === true && i >= 0) {
