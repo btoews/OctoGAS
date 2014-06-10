@@ -126,6 +126,12 @@ class Thread
   @dumpDoneToCache: ->
     CACHE.put @doneKey, JSON.stringify(@done)
 
+  # Archive all the messages in every thread.
+  #
+  # Returns nothing.
+  @archiveAll: ->
+    @all[id].archive() for id in @ids when !@all[id].alreadyDone()
+
   # Instantiate a Thread.
   #
   # @_thread - A GmailThread.
@@ -184,6 +190,10 @@ class Thread
         i--
 
     @_reason
+
+  # Archive the messages in
+  archive: ->
+    GmailApp.moveThreadsToArchive([@_thread])
 
   # Has this thread already been labeled?
   #
@@ -326,6 +336,7 @@ Thread.loadDoneFromCache()
 Message.loadReasonsFromCache()
 try
   Thread.labelAllForReason()
+  Thread.archiveAll()
 catch error
   Logger.log error
 finally
