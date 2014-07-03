@@ -1,4 +1,4 @@
-var BASE_LABEL, CACHE, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, Thread, main,
+var BASE_LABEL, CACHE, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, Thread, labler,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 MY_TEAMS = [];
@@ -339,7 +339,7 @@ Message = (function() {
 
 })();
 
-function main() {
+function labler() {
   Label.loadPersisted();
   Thread.loadFromSearch(QUERY);
   Thread.loadDoneFromCache();

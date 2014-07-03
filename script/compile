@@ -2,5 +2,5 @@
 
 for file in ./src/*.coffee; do
   base=$(basename $file .coffee)
-  coffee --no-header -csb < ./src/${base}.coffee | sed 's/main = function/function main/' > ${base}.gs
+  coffee --no-header -csb < ./src/${base}.coffee | sed "s/${base} = function/function ${base}/" > ${base}.gs
 done

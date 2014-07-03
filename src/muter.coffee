@@ -143,7 +143,7 @@ class Message
     else
       headers[key] = value
 
-main = ->
+muter = ->
   Logger.log "starting"
   Thread.loadFromSearch QUERY
   Thread.all[id].unsubscribeAndUnmute() for id in Thread.ids

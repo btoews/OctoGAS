@@ -327,7 +327,7 @@ class Message
 # Find all GitHub notifications in inbox and label them appropriately.
 #
 # Returns nothing.
-main = ->
+labler = ->
   Label.loadPersisted()
   Thread.loadFromSearch QUERY
   Thread.loadDoneFromCache()

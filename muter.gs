@@ -1,4 +1,4 @@
-var FETCH_OPTIONS, Message, QUERY, Thread, UNSUB_HEADER, UNSUB_URL_PREFIX, UNSUB_URL_REGEX, main;
+var FETCH_OPTIONS, Message, QUERY, Thread, UNSUB_HEADER, UNSUB_URL_PREFIX, UNSUB_URL_REGEX, muter;
 
 QUERY = "is:mute AND ( from:\"notifications@github.com\" OR from:\"noreply@github.com\" )";
 
@@ -145,7 +145,7 @@ Message = (function() {
 
 })();
 
-function main() {
+function muter() {
   var id, _i, _len, _ref;
   Logger.log("starting");
   Thread.loadFromSearch(QUERY);
