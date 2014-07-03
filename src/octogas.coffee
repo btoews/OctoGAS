@@ -5,7 +5,11 @@ MY_TEAMS = []
 BASE_LABEL = ["GitHub"]
 
 # The Gmail search to find threads to label
-QUERY = 'in:inbox AND (from:"notifications@github.com" OR from:"noreply@github.com")'
+QUERY = "in:inbox AND
+         (
+           from:\"notifications@github.com\" OR
+           from:\"noreply@github.com\"
+         )"
 
 # Finds team mentions for my teams and extracts the team name.
 MY_TEAMS_REGEX = new RegExp "(#{MY_TEAMS.join('|')})"
@@ -334,4 +338,3 @@ main = ->
   Label.applyAll()
   Thread.dumpDoneToCache()
   Message.dumpReasonsToCache()
-
