@@ -2,7 +2,7 @@
 
 ### Features
 
-#### Lable
+#### Label
 
 Creates/maintains Gmail labels based on GitHub notification metadata.
 
