@@ -5,7 +5,7 @@ MY_TEAMS = [];
 
 BASE_LABEL = ["GitHub"];
 
-QUERY = 'in:inbox AND (from:"notifications@github.com" OR from:"noreply@github.com")';
+QUERY = "in:inbox AND ( from:\"notifications@github.com\" OR from:\"noreply@github.com\" )";
 
 MY_TEAMS_REGEX = new RegExp("(" + (MY_TEAMS.join('|')) + ")");
 
@@ -139,23 +139,20 @@ Thread = (function() {
   };
 
   function Thread(_thread) {
-    var m, mess;
+    var m;
     this._thread = _thread;
     this.id = this._thread.getId();
     Thread.all[this.id] = this;
     Thread.ids.push(this.id);
     this.messages = (function() {
-      var _i, _len, _results;
-      if (mess = this._thread.getMessages()) {
-        _results = [];
-        for (_i = 0, _len = mess.length; _i < _len; _i++) {
-          m = mess[_i];
-          _results.push(new Message(m));
-        }
-        return _results;
-      } else {
-        return [];
+      var _i, _len, _ref, _results;
+      _ref = this._thread.getMessages() || [];
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        m = _ref[_i];
+        _results.push(new Message(m));
       }
+      return _results;
     }).call(this);
   }
 

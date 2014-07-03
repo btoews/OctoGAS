@@ -98,6 +98,7 @@ class Thread
   # Returns an Array of Threads.
   @loadFromSearch: (query) ->
     threads = GmailApp.search(query)
+
     # Preload all the messages to speed things up.
     GmailApp.getMessagesForThreads(threads)
     new Thread(t) for t in threads
@@ -133,10 +134,7 @@ class Thread
     @id = @_thread.getId()
     Thread.all[@id] = @
     Thread.ids.push @id
-    @messages = if mess = @_thread.getMessages()
-      new Message(m) for m in mess
-    else
-      []
+    @messages = (new Message(m) for m in @_thread.getMessages() || [])
 
   # Determine why we got this message and label the thread accordingly.
   #
