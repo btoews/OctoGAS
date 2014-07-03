@@ -1,4 +1,3 @@
-
 # Search that is run to find new message to unsubscribe from.
 QUERY = "is:mute AND
          (
