@@ -30,8 +30,6 @@ class Thread
   @loadFromSearch: (query) ->
     threads = GmailApp.search query
 
-    Logger.log "found #{threads.length} threads"
-
     # Preload all the messages to speed things up.
     GmailApp.getMessagesForThreads threads
     new Thread(t) for t in threads
@@ -60,13 +58,10 @@ class Thread
   # Returns true if the request was successful, false otherwise.
   unsubscribe: ->
     if url = @unsubUrl()
-      Logger.log "usub url for '#{@subject}': '#{url}'"
       if res = UrlFetchApp.fetch url, FETCH_OPTIONS
         if res.getResponseCode() == 200
-          Logger.log "win"
           true
         else
-          Logger.log "lose"
           false
 
   # Extracts the unsubscribe URL from the first message's headers.
@@ -79,7 +74,6 @@ class Thread
   #
   # Returns true.
   unmute: ->
-    Logger.log "unmuting: #{@subject}"
     @moveToArchive()
     true
 
@@ -143,8 +137,6 @@ class Message
     else
       headers[key] = value
 
-muter = ->
-  Logger.log "starting"
-  Thread.loadFromSearch QUERY
-  Thread.all[id].unsubscribeAndUnmute() for id in Thread.ids
-  Logger.log "done"
+# Find all muted GitHub conversations and unsubscribe from them
+Thread.loadFromSearch QUERY
+Thread.all[id].unsubscribeAndUnmute() for id in Thread.ids
