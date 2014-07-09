@@ -1,6 +1,11 @@
 #!/bin/sh
 
 for file in ./src/*.coffee; do
+  # Compile CoffeeScript and cleanup global wraper to work with GAS
   base=$(basename $file .coffee)
-  coffee --no-header -csb < ./src/${base}.coffee | sed "s/${base} = function/function ${base}/" > ${base}.gs
+  coffee --no-header -cs\
+    < ./src/${base}.coffee\
+    | sed "s/^(function() {/function ${base}() {/"\
+    | sed "s/^}).call(this);/}/" \
+    > ${base}.gs
 done

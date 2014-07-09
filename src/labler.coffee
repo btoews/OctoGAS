@@ -325,14 +325,11 @@ class Message
       headers[key] = value
 
 # Find all GitHub notifications in inbox and label them appropriately.
-#
-# Returns nothing.
-labler = ->
-  Label.loadPersisted()
-  Thread.loadFromSearch QUERY
-  Thread.loadDoneFromCache()
-  Message.loadReasonsFromCache()
-  Thread.labelAllForReason()
-  Label.applyAll()
-  Thread.dumpDoneToCache()
-  Message.dumpReasonsToCache()
+Label.loadPersisted()
+Thread.loadFromSearch QUERY
+Thread.loadDoneFromCache()
+Message.loadReasonsFromCache()
+Thread.labelAllForReason()
+Label.applyAll()
+Thread.dumpDoneToCache()
+Message.dumpReasonsToCache()
