@@ -1,10 +1,12 @@
 function labler() {
-  var BASE_LABEL, CACHE, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, Thread, error,
+  var BASE_LABEL, CACHE, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, SHOULD_ARCHIVE, Thread, error,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   MY_TEAMS = [];
 
   BASE_LABEL = ["GitHub"];
+
+  SHOULD_ARCHIVE = false;
 
   QUERY = "in:inbox AND ( from:\"notifications@github.com\" OR from:\"noreply@github.com\" )";
 
@@ -355,6 +357,9 @@ function labler() {
 
   try {
     Thread.labelAllForReason();
+    if (SHOULD_ARCHIVE) {
+      Thread.archiveAll();
+    }
   } catch (_error) {
     error = _error;
     Logger.log(error);

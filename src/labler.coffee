@@ -4,6 +4,9 @@ MY_TEAMS = []
 # Base label name to apply to nest all other labels under.
 BASE_LABEL = ["GitHub"]
 
+# Archive your messages after labeling.
+SHOULD_ARCHIVE = false
+
 # The Gmail search to find threads to label
 QUERY = "in:inbox AND
          (
@@ -336,7 +339,7 @@ Thread.loadDoneFromCache()
 Message.loadReasonsFromCache()
 try
   Thread.labelAllForReason()
-  Thread.archiveAll()
+  Thread.archiveAll() if SHOULD_ARCHIVE
 catch error
   Logger.log error
 finally
