@@ -1,10 +1,12 @@
 function labler() {
-  var BASE_LABEL, CACHE, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, Thread, error,
+  var BASE_LABEL, CACHE, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, SHOULD_ARCHIVE, Thread, error,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   MY_TEAMS = [];
 
   BASE_LABEL = ["GitHub"];
+
+  SHOULD_ARCHIVE = false;
 
   QUERY = "in:inbox AND ( from:\"notifications@github.com\" OR from:\"noreply@github.com\" )";
 
@@ -144,6 +146,23 @@ function labler() {
 
     Thread.dumpDoneToCache = function() {
       return CACHE.put(this.doneKey, JSON.stringify(this.done));
+    };
+
+    Thread.archiveAll = function() {
+      var id, threadsToArchive;
+      threadsToArchive = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.ids;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          id = _ref[_i];
+          if (!Thread.all[id].alreadyDone()) {
+            _results.push(Thread.all[id]._thread);
+          }
+        }
+        return _results;
+      }).call(this);
+      return GmailApp.moveThreadsToArchive(threadsToArchive);
     };
 
     function Thread(_thread) {
@@ -355,6 +374,9 @@ function labler() {
 
   try {
     Thread.labelAllForReason();
+    if (SHOULD_ARCHIVE) {
+      Thread.archiveAll();
+    }
   } catch (_error) {
     error = _error;
     Logger.log(error);
