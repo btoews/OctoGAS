@@ -14,6 +14,10 @@ Adds messages to folders based on the reason for the notification. It will creat
 - Watched repositories
 - Meta notifications (added to team, SSH key added, etc...)
 
+#### Archive
+
+Archives the messages after applying the labels. Disabled by default. Enable by setting `SHOULD_ARCHIVE` to `true`.
+
 #### Mute
 
 Finds muted Gmail threads from GitHub conversations and unsubscribes from the GitHub conversation. It then unmutes the Gmail Thread. The result is that GitHub's logic of re-subscribing on new @mentions is retained while taking advantage of Gmail's interface for muting conversations.
