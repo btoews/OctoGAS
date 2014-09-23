@@ -148,6 +148,23 @@ function labler() {
       return CACHE.put(this.doneKey, JSON.stringify(this.done));
     };
 
+    Thread.archiveAll = function() {
+      var id, threadsToArchive;
+      threadsToArchive = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.ids;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          id = _ref[_i];
+          if (!this.all[id].alreadyDone()) {
+            _results.push(all[id]._thread);
+          }
+        }
+        return _results;
+      }).call(this);
+      return GmailApp.moveThreadsToArchive(threadsToArchive);
+    };
+
     function Thread(_thread) {
       var m;
       this._thread = _thread;
