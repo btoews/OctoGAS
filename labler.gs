@@ -156,8 +156,8 @@ function labler() {
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           id = _ref[_i];
-          if (!this.all[id].alreadyDone()) {
-            _results.push(all[id]._thread);
+          if (!Thread.all[id].alreadyDone()) {
+            _results.push(Thread.all[id]._thread);
           }
         }
         return _results;

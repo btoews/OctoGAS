@@ -133,7 +133,7 @@ class Thread
   #
   # Returns nothing.
   @archiveAll: ->
-    threadsToArchive = (all[id]._thread for id in @ids when !@all[id].alreadyDone())
+    threadsToArchive = (Thread.all[id]._thread for id in @ids when !Thread.all[id].alreadyDone())
     GmailApp.moveThreadsToArchive(threadsToArchive)
 
   # Instantiate a Thread.
