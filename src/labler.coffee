@@ -280,7 +280,7 @@ class Message
   #
   # Retruns a String or undefined.
   firstAddressInHeader: (header) ->
-    (@headers()[header].match(/.*? <(.*)>/) || [])[1]
+    @headers()[header]?.match(/.*? <(.*)>/)?[1]
 
   # The the name our of an address header like "From: Foo Bar <foobar@gmail.com>"
   #
