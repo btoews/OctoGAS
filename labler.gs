@@ -319,7 +319,8 @@ function labler() {
     };
 
     Message.prototype.firstAddressInHeader = function(header) {
-      return (this.headers()[header].match(/.*? <(.*)>/) || [])[1];
+      var _ref, _ref1;
+      return (_ref = this.headers()[header]) != null ? (_ref1 = _ref.match(/.*? <(.*)>/)) != null ? _ref1[1] : void 0 : void 0;
     };
 
     Message.prototype.firstNameInHeader = function(header) {
