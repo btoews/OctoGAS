@@ -73,8 +73,13 @@ function muter() {
     };
 
     Thread.prototype.unmute = function() {
+      this.moveToInbox();
       this.moveToArchive();
       return true;
+    };
+
+    Thread.prototype.moveToInbox = function() {
+      return this._thread.moveToInbox();
     };
 
     Thread.prototype.moveToArchive = function() {
