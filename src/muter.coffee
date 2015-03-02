@@ -70,12 +70,19 @@ class Thread
   unsubUrl: ->
     @messages[0].unsubUrl() if @messages.length > 0
 
-  # Unmutes the thread by moving it to the archive.
+  # Unmutes the thread by moving it to the inbox and then to the archive.
   #
   # Returns true.
   unmute: ->
+    @moveToInbox()
     @moveToArchive()
     true
+
+  # Move the thread to the inbox.
+  #
+  # Returns nothing.
+  moveToInbox: ->
+    @_thread.moveToInbox()
 
   # Move the thread to the archive.
   #
