@@ -1,0 +1,86 @@
+<script>
+  var muterBox;
+
+  function installMuterTrigger() {
+    muterBox.className = "installing";
+    google.script.run.
+      withSuccessHandler(function (){
+        muterBox.className = "installed";
+      }).
+      installMuterTrigger();
+  }
+
+  function uninstallMuterTrigger() {
+    muterBox.className = "uninstalling";
+    google.script.run.
+      withSuccessHandler(function (){
+        muterBox.className = "uninstalled";
+      }).
+      uninstallMuterTrigger();
+  }
+
+  function checkMuterTrigger() {
+    google.script.run.
+      withSuccessHandler(function (isInstalled){
+        muterBox.className = isInstalled ? "installed" : "uninstalled";
+      }).
+      muterTriggerIsInstalled();
+  }
+
+  window.onload = function (){
+    muterBox = document.querySelector("div#muter-box");
+    checkMuterTrigger();
+  }
+
+</script>
+
+<style>
+  div#muter-box .state {
+    display: none;
+  }
+
+  div#muter-box.checking .state.checking {
+    display: block;
+  }
+
+  div#muter-box.installed .state.installed {
+    display: block;
+  }
+
+  div#muter-box.uninstalled .state.uninstalled {
+    display: block;
+  }
+
+  div#muter-box.installing .state.installing {
+    display: block;
+  }
+
+  div#muter-box.uninstalling .state.uninstalling {
+    display: block;
+  }
+</style>
+
+<h1>OctoGAS</h1>
+
+<div id="muter-box" class="checking">
+  <h2>Muter</h2>
+  <p>This script checks your inbox for muted threads from GitHub. It makes a request to unsubscribe you from the GitHub issue or pull request and unmutes the Gmail conversation. That way, if you are <code>@mentioned</code> again, you will be re-subscribed to the thread.</p>
+
+  <div id="state">
+    <span class="state checking">Checking if muter is installed.</span>
+    <span class="state installed">Muter is installed.</span>
+    <span class="state uninstalled">Muter is not installed.</span>
+    <span class="state installing">Installing muter.</span>
+    <span class="state uninstalling">Uninstalling muter.</span>
+  </div>
+
+  <div id="install" class="state uninstalled">
+    <p>Click this button to install the muter script!</p>
+    <button onclick="installMuterTrigger()">Install</button>
+  </div>
+
+  <div id="uninstall" class="state installed">
+    <p>Click this button to uninstall the muter script!</p>
+    <button onclick="uninstallMuterTrigger()">Uninstall</button>
+  </div>
+</div>
