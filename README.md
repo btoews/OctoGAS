@@ -31,6 +31,7 @@ Because Google Apps Scripts run on Google's infrastructure, you will need to set
 1. Adjust the `MY_TEAMS` variable in the `labler.gs` file to list GitHub teams that you care about. (i.e. ["@myorg/myteam"])
 1. Go to "Resources > Current Project's Triggers"
 1. Create a new trigger to run the `main` function of `labler.gs`, `muter.gs`, or both however often you want. If you set it to run every minute you will hit a Google rate limit.
+![image](https://cloud.githubusercontent.com/assets/24734/6636186/0625b508-c944-11e4-877a-318ba1c46dfa.png)
 
 ### Hacking
 
