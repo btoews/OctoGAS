@@ -4,14 +4,15 @@
   githubTeamSlugs = false;
 
   fetchCachedGitHubTeamSlugs = function() {
-    var cache, slugs;
+    var cache, cachedSlugs, slugs;
     Logger.log("Trying to load GitHub teams from cache");
     if (githubTeamSlugs) {
       Logger.log("fetchCachedGitHubTeamSlugs: local cache hit");
     } else {
       cache = CacheService.getUserCache();
-      githubTeamSlugs = cache.get("github-team-slugs");
-      if (githubTeamSlugs) {
+      cachedSlugs = cache.get("github-team-slugs");
+      if (cachedSlugs) {
+        githubTeamSlugs = JSON.parse(cachedSlugs);
         Logger.log("fetchCachedGitHubTeamSlugs: cache hit");
       } else {
         Logger.log("fetchCachedGitHubTeamSlugs: cache miss");
@@ -20,7 +21,7 @@
           return "err";
         }
         githubTeamSlugs = slugs;
-        cache.put("github-team-slugs", slugs, 3600);
+        cache.put("github-team-slugs", JSON.stringify(slugs), 3600);
       }
     }
     return githubTeamSlugs;

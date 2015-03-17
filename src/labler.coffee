@@ -1,5 +1,8 @@
 # An Array of teams I'm on. Eg ["@myorg/myteam"]
-MY_TEAMS = []
+MY_TEAMS = if fetchCachedGitHubTeamSlugs() != "err"
+  fetchCachedGitHubTeamSlugs()
+else
+  []
 
 # Base label name to apply to nest all other labels under.
 BASE_LABEL = ["GitHub"]
