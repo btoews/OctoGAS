@@ -15,6 +15,7 @@ coffee --no-header -cs\
   < ./src/teams.coffee\
   | sed "s/^(function() {//"\
   | sed "s/^}).call(this);//"\
+  | sed "s/\([a-zA-Z]*\) = function/function \1/"\
   > teams.gs
 
 coffee --no-header -cs\

@@ -7,13 +7,12 @@ doGet = (req) ->
   template.muterState = if triggerIsInstalled("muter") then "installed" else "uninstalled"
 
   # Check state of labler function trigger.
-  if triggerIsInstalled "labler"
-    template.lablerState = "installed"
-  else if fetchCachedGitHubTeamSlugs() != "err"
-    Logger.log fetchCachedGitHubTeamSlugs()
-    template.lablerState = "uninstalled"
-  else
+  if fetchCachedGitHubTeamSlugs() == "err"
     template.lablerState = "not-authorized"
+  else if triggerIsInstalled "labler"
+    template.lablerState = "installed"
+  else
+    template.lablerState = "uninstalled"
 
   output = template.evaluate()
   output.setSandboxMode HtmlService.SandboxMode.IFRAME

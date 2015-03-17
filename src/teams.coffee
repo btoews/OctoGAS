@@ -17,6 +17,7 @@ fetchCachedGitHubTeamSlugs = ->
       return "err" if slugs == "err"
       githubTeamSlugs = slugs
       cache.put "github-team-slugs", JSON.stringify(slugs), 3600
+  Logger.log JSON.stringify(githubTeamSlugs)
   githubTeamSlugs
 
 # Load the user's teams from the GitHub API.
@@ -37,8 +38,8 @@ loadGitHubTeams = ->
     return "err"
 
   teams = JSON.parse response.getContentText()
-  teamSlugs = ["@#{t["organization"]["login"]}/#{t["slug"]}" for t in teams]
-  Logger.log "loadGitHubTeams: Loaded teams from GitHub API: ", teamSlugs
+  teamSlugs = ("@#{t["organization"]["login"]}/#{t["slug"]}" for t in teams)
+  Logger.log "loadGitHubTeams: Loaded teams from GitHub API."
   teamSlugs
 
 # Oauth service for GitHub.com.
@@ -51,7 +52,7 @@ getGitHubService = ->
     .setProjectKey('M0FjeQ5yKTbPoxSB2lDmzPjxjc-ysB9lY')
     .setCallbackFunction('authCallback')
     .setPropertyStore(PropertiesService.getUserProperties())
-    .setScope('user')
+    .setScope('read:org')
 
 # Oauth client ID for GitHub.com.
 githubClientId = ->

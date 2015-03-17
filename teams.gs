@@ -3,7 +3,7 @@
 
   githubTeamSlugs = false;
 
-  fetchCachedGitHubTeamSlugs = function() {
+  function fetchCachedGitHubTeamSlugs() {
     var cache, cachedSlugs, slugs;
     Logger.log("Trying to load GitHub teams from cache");
     if (githubTeamSlugs) {
@@ -24,10 +24,11 @@
         cache.put("github-team-slugs", JSON.stringify(slugs), 3600);
       }
     }
+    Logger.log(JSON.stringify(githubTeamSlugs));
     return githubTeamSlugs;
   };
 
-  loadGitHubTeams = function() {
+  function loadGitHubTeams() {
     var githubService, response, t, teamSlugs, teams;
     Logger.log("loadGitHubTeams: Loading GitHub teams from the API");
     githubService = getGitHubService();
@@ -45,37 +46,33 @@
       return "err";
     }
     teams = JSON.parse(response.getContentText());
-    teamSlugs = [
-      (function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = teams.length; _i < _len; _i++) {
-          t = teams[_i];
-          _results.push("@" + t["organization"]["login"] + "/" + t["slug"]);
-        }
-        return _results;
-      })()
-    ];
-    Logger.log("loadGitHubTeams: Loaded teams from GitHub API: ", teamSlugs);
+    teamSlugs = (function() {
+      var _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = teams.length; _i < _len; _i++) {
+        t = teams[_i];
+        _results.push("@" + t["organization"]["login"] + "/" + t["slug"]);
+      }
+      return _results;
+    })();
+    Logger.log("loadGitHubTeams: Loaded teams from GitHub API.");
     return teamSlugs;
   };
 
-  getGitHubService = function() {
-    return OAuth2.createService('github').setAuthorizationBaseUrl('https://github.com/login/oauth/authorize').setTokenUrl('https://github.com/login/oauth/access_token').setClientId(githubClientId()).setClientSecret(githubClientSecret()).setProjectKey('M0FjeQ5yKTbPoxSB2lDmzPjxjc-ysB9lY').setCallbackFunction('authCallback').setPropertyStore(PropertiesService.getUserProperties()).setScope('user');
+  function getGitHubService() {
+    return OAuth2.createService('github').setAuthorizationBaseUrl('https://github.com/login/oauth/authorize').setTokenUrl('https://github.com/login/oauth/access_token').setClientId(githubClientId()).setClientSecret(githubClientSecret()).setProjectKey('M0FjeQ5yKTbPoxSB2lDmzPjxjc-ysB9lY').setCallbackFunction('authCallback').setPropertyStore(PropertiesService.getUserProperties()).setScope('read:org');
   };
 
-  githubClientId = function() {
+  function githubClientId() {
     return PropertiesService.getScriptProperties().getProperty("github_client_id");
   };
 
-  githubClientSecret = function() {
+  function githubClientSecret() {
     return PropertiesService.getScriptProperties().getProperty("github_client_secret");
   };
 
-  resetGitHubAuthorization = function() {
+  function resetGitHubAuthorization() {
     var githubService;
     githubService = getGitHubService();
     return githubService.reset();
   };
-
-
