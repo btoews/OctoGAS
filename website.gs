@@ -14,7 +14,7 @@
       template.lablerState = "uninstalled";
     }
     output = template.evaluate();
-    output.setSandboxMode(HtmlService.SandboxMode.IFRAME);
+    output.setSandboxMode(HtmlService.SandboxMode.NATIVE);
     return output;
   };
 

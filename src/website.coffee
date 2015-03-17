@@ -15,7 +15,7 @@ doGet = (req) ->
     template.lablerState = "uninstalled"
 
   output = template.evaluate()
-  output.setSandboxMode HtmlService.SandboxMode.IFRAME
+  output.setSandboxMode HtmlService.SandboxMode.NATIVE
   output
 
 # Get a token from the auth code returned from GitHub.
