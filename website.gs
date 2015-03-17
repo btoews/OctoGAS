@@ -3,7 +3,7 @@
 
   function doGet(req) {
     var githubService, output, template;
-    template = HtmlService.createTemplateFromFile("index-template");
+    template = HtmlService.createTemplateFromFile("index");
     githubService = template.githubService = getGitHubService();
     template.muterState = triggerIsInstalled("muter") ? "installed" : "uninstalled";
     if (triggerIsInstalled("labler")) {

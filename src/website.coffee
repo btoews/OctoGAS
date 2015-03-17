@@ -1,6 +1,6 @@
 # Handle a GET request to the site.
 doGet = (req) ->
-  template = HtmlService.createTemplateFromFile "index-template"
+  template = HtmlService.createTemplateFromFile "index"
   githubService = template.githubService = getGitHubService()
 
   # Check state of muter function trigger.
