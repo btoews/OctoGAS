@@ -1,11 +1,25 @@
 #!/bin/sh
 
-for file in ./src/*.coffee; do
-  # Compile CoffeeScript and cleanup global wraper to work with GAS
-  base=$(basename $file .coffee)
-  coffee --no-header -cs\
-    < ./src/${base}.coffee\
-    | sed "s/^(function() {/function ${base}() {/"\
-    | sed "s/^}).call(this);/}/" \
-    > ${base}.gs
-done
+coffee --no-header -cs\
+  < ./src/labler.coffee\
+  | sed "s/^(function() {/function labler() {/"\
+  | sed "s/^}).call(this);/}/" > labler.gs
+
+coffee --no-header -cs\
+  < ./src/muter.coffee\
+  | sed "s/^(function() {/function muter() {/"\
+  | sed "s/^}).call(this);/}/"\
+  > muter.gs
+
+coffee --no-header -cs\
+  < ./src/teams.coffee\
+  | sed "s/^(function() {//"\
+  | sed "s/^}).call(this);//"\
+  > teams.gs
+
+coffee --no-header -cs\
+  < ./src/website.coffee\
+  | sed "s/^(function() {//"\
+  | sed "s/^}).call(this);//"\
+  | sed "s/\([a-zA-Z]*\) = function/function \1/"\
+  > website.gs
