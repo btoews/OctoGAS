@@ -50,12 +50,14 @@
     muterBox = document.querySelector("#muter-box");
     lablerBox = document.querySelector("#labler-box");
   }
-
 </script>
 
 <style>
   body, * {
     font-family: menlo, monospace;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
   }
 
   body {
@@ -64,8 +66,14 @@
     padding: 30px;
     background-color: #7FD36C;
     color: #fff;
-    font-size: 13px;
+    font-size: 12px;
     text-align: center;
+    background-image: url('http://cl.ly/image/2C0o1R0r0H2H/funodes-small.png');
+    background-repeat: repeat-x;
+  }
+
+  a {
+    color: #D6FFCC;
   }
 
   .page-title {
@@ -78,9 +86,22 @@
   }
 
   .wrapper {
+    padding: 30px;
     text-align: left;
-    width: 420px;
-    margin: 30px auto;
+    width: 500px;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 5px;
+    margin: 30px auto 60px;
+    font-size: 13px;
+    max-width: 100%;
+    transition: border-color .3s, box-shadow .3s;
+    -moz-transition: border-color .3s, box-shadow .3s;
+    -webkit-transition: border-color .3s, box-shadow .3s;
+  }
+
+  .wrapper:hover {
+    border-color: rgba(255, 255, 255, .4);
+    box-shadow: 0 0 5px rgba(255, 255, 255, .2);
   }
 
   h2 {
@@ -167,25 +188,29 @@
     content: "×  Uninstall"
   }
 
-  div.state-box {
+  .state-box {
     text-align: center;
     font-size: 12px;
     color: #f9f9f9;
+    margin-top: 15px;
   }
 
-  button, a.button {
+  button, .button {
+    font-size: 12px;
     border: 3px solid #71c45e;
     color: #71c45e;
     background: #fff;
     text-align: center;
     display: block;
     padding: 12px 19px;
-    margin: 30px auto 0;
     font-weight: bold;
+    width: 100%;
+    text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
     border-radius: 5px;
     letter-spacing: 1px;
+    cursor: pointer;
   }
 
   button:hover, a.button:hover {
@@ -198,14 +223,31 @@
     padding-bottom: 11px;
   }
 
-</style>
-<h1 class="page-title">OctoGAS</h1>
+  .dot {
+    margin: 15px auto;
+    background-color: #fff;
+    width: 5px;
+    height: 5px;
+    border-radius: 8px;
+  }
 
+  footer {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+</style>
+
+<h1 class="page-title">OctoGAS</h1>
 <div class="wrapper">
   <div id="muter-box" class="<?= muterState ?>">
     <h2>Muter</h2>
     <p>This script checks your inbox for muted threads from GitHub. It makes a request to unsubscribe you from the GitHub issue or pull request and unmutes the Gmail conversation. That way, if you are <code>@mentioned</code> again, you will be re-subscribed to the thread.</p>
 
+    <div class="state-box">
+      <span class="state installed">Muter is installed.</span>
+      <span class="state uninstalled">Muter is not installed.</span>
+      <span class="state installing uninstalling">&nbsp;</span>
+    </div>
 
     <div id="install" class="state uninstalled">
       <button onclick="installMuterTrigger()"></button>
@@ -218,24 +260,24 @@
     <div id="uninstall" class="state installed">
       <button onclick="uninstallMuterTrigger()"></button>
     </div>
-
-    <div class="state-box">
-      <span class="state installed">Muter is installed.</span>
-      <span class="state uninstalled">Muter is not installed.</span>
-      <span class="state installing uninstalling">&nbsp;</span>
-    </div>
   </div>
 </div>
 
 <div class="wrapper">
   <div id="labler-box" class="<?= lablerState ?>">
     <h2>Labler</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
-
-    <div class="state not-authorized">
-      <p>You need to authorize this app with your GitHub account before installing Labler. This will allow us to get a list of your GitHub teams, so we know how to create labels for team <code>@mentions</code>.</p>
-      <a class="button" href="<?= githubService.getAuthorizationUrl() ?>">Authorize with GitHub</a>
+    <p>This script creates/maintains Gmail labels based on GitHub notification metadata, and adds messages to folders based on the reason for the notification.</p>
+    <p class="state not-authorized">You need to authorize this app with your GitHub account before installing Labler. This will allow us to get a list of your GitHub teams, so we know how to create labels for team <code>@mentions</code>.</p>
+    <div class="state-box">
+      <span class="state not-authorized">Not authorized to GitHub.</span>
+      <span class="state uninstalled">Labler is not installed.</span>
+      <span class="state installed">Labler is installed.</span>
+      <span class="state installing uninstalling">&nbsp;</span>
     </div>
+
+    <a class="button state not-authorized" href="<?= githubService.getAuthorizationUrl() ?>">
+      Authorize with GitHub
+    </a>
 
     <div id="install" class="state uninstalled">
       <button onclick="installLablerTrigger()"></button>
@@ -248,12 +290,10 @@
     <div id="uninstall" class="state installed">
       <button onclick="uninstallLablerTrigger()"></button>
     </div>
-
-      <div class="state-box">
-        <span class="state not-authorized">Not authorized to GitHub.</span>
-        <span class="state uninstalled">Labler is not installed</span>
-        <span class="state installed">Labler is installed.</span>
-        <span class="state installing uninstalling">&nbsp;</span>
-    </div>
   </div>
 </div>
+
+<footer>
+  <div class="dot"></div>
+  Made by <a href="https://github.com/mastahyeti">@mastahyeti</a> with CSS from <a href="https://github.com/muan">@muan</a>.
+</footer>
