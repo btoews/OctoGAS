@@ -26,6 +26,8 @@ Finds muted Gmail threads from GitHub conversations and unsubscribes from the Gi
 
 OctoGAS can be installed to your Google account from the [OctoGAS website](https://script.google.com/macros/s/AKfycbyTt-wRFUb-O6WkoamJUPdAS8LMeQ-tbl_k2dIXP4WKAyGvlZr1/exec). This requires you to authorize OctoGAS to manage your Gmail messages. Installing the labler also requires you to authorize OctoGAS to access your GitHub account, so it knows which teams you are on.
 
+![OctoGAS website](https://cloud.githubusercontent.com/assets/1144197/7011123/ac80c122-dc63-11e4-96da-090373e1be34.png)
+
 You can also manually install OctoGAS by following the instructions in the [Hacking](#hacking) section.
 
 ### Hacking
