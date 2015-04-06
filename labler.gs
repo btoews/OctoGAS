@@ -8,7 +8,7 @@ function labler() {
 
   SHOULD_ARCHIVE = false;
 
-  QUERY = "in:inbox AND ( from:\"notifications@github.com\" OR from:\"noreply@github.com\" )";
+  QUERY = "label:github-pending";
 
   MY_TEAMS_REGEX = new RegExp("(" + (MY_TEAMS.join('|')) + ")");
 
@@ -164,6 +164,24 @@ function labler() {
       }).call(this);
       return GmailApp.moveThreadsToArchive(threadsToArchive);
     };
+
+    Thread.removePending = function() {
+      var id, threadsPending, pendingLabel;
+      threadsPending = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.ids;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          id = _ref[_i];
+          if (!Thread.all[id].alreadyDone()) {
+            _results.push(Thread.all[id]._thread);
+          }
+        }
+        return _results;
+      }).call(this);
+      pendingLabel = Label.findOrCreate(BASE_LABEL.concat(["Pending"]));
+      pendingLabel._label.removeFromThreads(threadsPending);
+    }
 
     function Thread(_thread) {
       var m;
@@ -377,6 +395,8 @@ function labler() {
     Thread.labelAllForReason();
     if (SHOULD_ARCHIVE) {
       Thread.archiveAll();
+    } else {
+      Thread.removePending();
     }
   } catch (_error) {
     error = _error;
