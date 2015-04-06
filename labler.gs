@@ -2,7 +2,7 @@ function labler() {
   var BASE_LABEL, CACHE, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, SHOULD_ARCHIVE, Thread, error,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  MY_TEAMS = [];
+  MY_TEAMS = fetchCachedGitHubTeamSlugs() !== "err" ? fetchCachedGitHubTeamSlugs() : [];
 
   BASE_LABEL = ["GitHub"];
 

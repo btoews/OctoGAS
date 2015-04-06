@@ -24,15 +24,14 @@ Finds muted Gmail threads from GitHub conversations and unsubscribes from the Gi
 
 ### Installation
 
-Because Google Apps Scripts run on Google's infrastructure, you will need to set this script up to run on Google Scripts.
+OctoGAS can be installed to your Google account from the [OctoGAS website](https://script.google.com/macros/s/AKfycbyTt-wRFUb-O6WkoamJUPdAS8LMeQ-tbl_k2dIXP4WKAyGvlZr1/exec). This requires you to authorize OctoGAS to manage your Gmail messages. Installing the labler also requires you to authorize OctoGAS to access your GitHub account, so it knows which teams you are on.
 
-1. Go [here](https://script.google.com/d/1yTtQ4bGlpsuv3lp0pWLmArzEbya4bvi_ABJ3Jn9NR8iDSAXZSwd3ynjh/edit)
-1. Go to "File > Make Copy..."
-1. Adjust the `MY_TEAMS` variable in the `labler.gs` file to list GitHub teams that you care about. (i.e. ["@myorg/myteam"])
-1. Go to "Resources > Current Project's Triggers"
-1. Create a new trigger to run the labler and/or muter functions however often you want. If you set it to run every minute you will hit a Google rate limit.
-![image](https://cloud.githubusercontent.com/assets/24734/6636186/0625b508-c944-11e4-877a-318ba1c46dfa.png)
+![OctoGAS website](https://cloud.githubusercontent.com/assets/1144197/7011123/ac80c122-dc63-11e4-96da-090373e1be34.png)
+
+You can also manually install OctoGAS by following the instructions in the [Hacking](#hacking) section.
 
 ### Hacking
+
+Make your own copy of the Google Apps Script project by going [here](https://script.google.com/d/1yTtQ4bGlpsuv3lp0pWLmArzEbya4bvi_ABJ3Jn9NR8iDSAXZSwd3ynjh/edit) and selecting "File > Make Copy..." in the menu bar.
 
 You can build the source by running `script/compile`. The generated output in `labler.gs` and `muter.gs` can be coppied directly into a Google Apps Script.
