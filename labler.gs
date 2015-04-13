@@ -12,7 +12,7 @@ function labler() {
 
   MY_TEAMS_REGEX = new RegExp("(" + (MY_TEAMS.join('|')) + ")");
 
-  CACHE = CacheService.getPrivateCache();
+  CACHE = CacheService.getUserCache();
 
   CACHE_VERSION = 1;
 

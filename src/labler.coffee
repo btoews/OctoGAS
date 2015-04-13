@@ -21,7 +21,7 @@ QUERY = "in:inbox AND
 MY_TEAMS_REGEX = new RegExp "(#{MY_TEAMS.join('|')})"
 
 # Private cache so we don't need to process every message every time.
-CACHE = CacheService.getPrivateCache()
+CACHE = CacheService.getUserCache()
 CACHE_VERSION = 1
 
 class Label
