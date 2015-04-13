@@ -23,6 +23,7 @@ MY_TEAMS_REGEX = new RegExp "(#{MY_TEAMS.join('|')})"
 # Private cache so we don't need to process every message every time.
 CACHE = CacheService.getUserCache()
 CACHE_VERSION = 1
+CACHE_EXPIRY = 60 * 60 * 2
 
 class Label
   @all   = {}
@@ -130,7 +131,7 @@ class Thread
   #
   # Returns nothing.
   @dumpDoneToCache: ->
-    CACHE.put @doneKey, JSON.stringify(@done)
+    CACHE.put @doneKey, JSON.stringify(@done), CACHE_EXPIRY
 
   # Archive all the messages in every thread.
   #
@@ -222,7 +223,7 @@ class Message
   @dumpReasonsToCache: ->
     reasons = {}
     reasons[k] = JSON.stringify(@all[k]._reason) for k in @keys when @all[k]._reason?
-    CACHE.putAll reasons
+    CACHE.putAll reasons, CACHE_EXPIRY
 
   # Instantiate a new Message object.
   #
