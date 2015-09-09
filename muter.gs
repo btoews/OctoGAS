@@ -1,5 +1,5 @@
 function muter() {
-  var FETCH_OPTIONS, Message, QUERY, Thread, UNSUB_HEADER, UNSUB_URL_PREFIX, UNSUB_URL_REGEX, id, _i, _len, _ref;
+  var FETCH_OPTIONS, Message, QUERY, Thread, UNSUB_HEADER, UNSUB_URL_PREFIX, UNSUB_URL_REGEX, i, id, len, ref;
 
   QUERY = "is:mute AND ( from:\"notifications@github.com\" OR from:\"noreply@github.com\" )";
 
@@ -19,15 +19,15 @@ function muter() {
     Thread.ids = [];
 
     Thread.loadFromSearch = function(query) {
-      var t, threads, _i, _len, _results;
+      var i, len, results, t, threads;
       threads = GmailApp.search(query);
       GmailApp.getMessagesForThreads(threads);
-      _results = [];
-      for (_i = 0, _len = threads.length; _i < _len; _i++) {
-        t = threads[_i];
-        _results.push(new Thread(t));
+      results = [];
+      for (i = 0, len = threads.length; i < len; i++) {
+        t = threads[i];
+        results.push(new Thread(t));
       }
-      return _results;
+      return results;
     };
 
     function Thread(_thread) {
@@ -37,14 +37,14 @@ function muter() {
       Thread.all[this.id] = this;
       Thread.ids.push(this.id);
       this.messages = (function() {
-        var _i, _len, _ref, _results;
-        _ref = this._thread.getMessages() || [];
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          m = _ref[_i];
-          _results.push(new Message(m));
+        var i, len, ref, results;
+        ref = this._thread.getMessages() || [];
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          m = ref[i];
+          results.push(new Message(m));
         }
-        return _results;
+        return results;
       }).call(this);
       this.subject = this._thread.getFirstMessageSubject();
     }
@@ -62,7 +62,11 @@ function muter() {
           } else {
             return false;
           }
+        } else {
+          return false;
         }
+      } else {
+        return true;
       }
     };
 
@@ -96,11 +100,11 @@ function muter() {
     }
 
     Message.prototype.unsubUrl = function() {
-      var match, raw, value, _i, _len, _ref;
+      var i, len, match, raw, ref, value;
       if (raw = this.headers()[UNSUB_HEADER]) {
-        _ref = raw.split(", ");
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          value = _ref[_i];
+        ref = raw.split(", ");
+        for (i = 0, len = ref.length; i < len; i++) {
+          value = ref[i];
           if (match = value.match(UNSUB_URL_REGEX)) {
             return match[1];
           }
@@ -109,20 +113,20 @@ function muter() {
     };
 
     Message.prototype.headers = function() {
-      var key, line, match, parts, value, _i, _len, _ref, _ref1;
+      var i, key, len, line, match, parts, ref, ref1, value;
       if (this._headers == null) {
         this._headers = {};
         parts = this._message.getRawContent().split("\r\n\r\n", 2);
-        _ref = parts[0].split("\r\n");
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          line = _ref[_i];
+        ref = parts[0].split("\r\n");
+        for (i = 0, len = ref.length; i < len; i++) {
+          line = ref[i];
           if (match = line.match(/^\s+(.*)/)) {
             value += " " + match[1];
           } else {
             if ((typeof key !== "undefined" && key !== null) && (typeof value !== "undefined" && value !== null)) {
               this.setHeader(this._headers, key, value);
             }
-            _ref1 = line.split(": ", 2), key = _ref1[0], value = _ref1[1];
+            ref1 = line.split(": ", 2), key = ref1[0], value = ref1[1];
           }
         }
         if ((key != null) && (value != null)) {
@@ -148,9 +152,9 @@ function muter() {
 
   Thread.loadFromSearch(QUERY);
 
-  _ref = Thread.ids;
-  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    id = _ref[_i];
+  ref = Thread.ids;
+  for (i = 0, len = ref.length; i < len; i++) {
+    id = ref[i];
     Thread.all[id].unsubscribeAndUnmute();
   }
 

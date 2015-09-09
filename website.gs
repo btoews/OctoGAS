@@ -30,25 +30,25 @@
   };
 
   function uninstallTrigger(name) {
-    var trigger, triggers, _i, _len, _results;
+    var i, len, results, trigger, triggers;
     triggers = ScriptApp.getProjectTriggers();
-    _results = [];
-    for (_i = 0, _len = triggers.length; _i < _len; _i++) {
-      trigger = triggers[_i];
+    results = [];
+    for (i = 0, len = triggers.length; i < len; i++) {
+      trigger = triggers[i];
       if (trigger.getEventType() === ScriptApp.EventType.CLOCK && trigger.getHandlerFunction() === name) {
-        _results.push(ScriptApp.deleteTrigger(trigger));
+        results.push(ScriptApp.deleteTrigger(trigger));
       } else {
-        _results.push(void 0);
+        results.push(void 0);
       }
     }
-    return _results;
+    return results;
   };
 
   function triggerIsInstalled(func) {
-    var trigger, triggers, _i, _len;
+    var i, len, trigger, triggers;
     triggers = ScriptApp.getProjectTriggers();
-    for (_i = 0, _len = triggers.length; _i < _len; _i++) {
-      trigger = triggers[_i];
+    for (i = 0, len = triggers.length; i < len; i++) {
+      trigger = triggers[i];
       if (trigger.getEventType() === ScriptApp.EventType.CLOCK && trigger.getHandlerFunction() === func) {
         return true;
       }

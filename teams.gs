@@ -47,13 +47,13 @@
     }
     teams = JSON.parse(response.getContentText());
     teamSlugs = (function() {
-      var _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = teams.length; _i < _len; _i++) {
-        t = teams[_i];
-        _results.push("@" + t["organization"]["login"] + "/" + t["slug"]);
+      var i, len, results;
+      results = [];
+      for (i = 0, len = teams.length; i < len; i++) {
+        t = teams[i];
+        results.push("@" + t["organization"]["login"] + "/" + t["slug"]);
       }
-      return _results;
+      return results;
     })();
     Logger.log("loadGitHubTeams: Loaded teams from GitHub API.");
     return teamSlugs;

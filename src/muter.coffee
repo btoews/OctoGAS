@@ -55,7 +55,8 @@ class Thread
 
   # Unsubscribe from the issue/PR on GitHub.com.
   #
-  # Returns true if the request was successful, false otherwise.
+  # Returns true if the request was successful or if there was no unsubscribe
+  # url false otherwise.
   unsubscribe: ->
     if url = @unsubUrl()
       if res = UrlFetchApp.fetch url, FETCH_OPTIONS
@@ -63,6 +64,10 @@ class Thread
           true
         else
           false
+      else
+        false
+    else
+      true
 
   # Extracts the unsubscribe URL from the first message's headers.
   #

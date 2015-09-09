@@ -1,6 +1,6 @@
 function labler() {
-  var BASE_LABEL, CACHE, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, SHOULD_ARCHIVE, Thread, error,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+  var BASE_LABEL, CACHE, CACHE_EXPIRY, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, SHOULD_ARCHIVE, Thread, error, error1, error2,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   MY_TEAMS = fetchCachedGitHubTeamSlugs() !== "err" ? fetchCachedGitHubTeamSlugs() : [];
 
@@ -16,20 +16,22 @@ function labler() {
 
   CACHE_VERSION = 1;
 
+  CACHE_EXPIRY = 60 * 60 * 2;
+
   Label = (function() {
     Label.all = {};
 
     Label.names = [];
 
     Label.loadPersisted = function() {
-      var l, _i, _len, _ref, _results;
-      _ref = GmailApp.getUserLabels();
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        l = _ref[_i];
-        _results.push(new Label(l.getName(), l));
+      var j, l, len, ref, results;
+      ref = GmailApp.getUserLabels();
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        l = ref[j];
+        results.push(new Label(l.getName(), l));
       }
-      return _results;
+      return results;
     };
 
     Label.findOrCreate = function(name_parts) {
@@ -42,24 +44,24 @@ function labler() {
     };
 
     Label.find = function(name) {
-      if (__indexOf.call(this.names, name) >= 0) {
+      if (indexOf.call(this.names, name) >= 0) {
         return this.all[name];
       }
     };
 
     Label.applyAll = function() {
-      var n, _i, _len, _ref, _results;
-      _ref = this.names;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        n = _ref[_i];
-        _results.push(this.all[n].apply());
+      var j, len, n, ref, results;
+      ref = this.names;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        n = ref[j];
+        results.push(this.all[n].apply());
       }
-      return _results;
+      return results;
     };
 
-    function Label(name, _label) {
-      this.name = name;
+    function Label(name1, _label) {
+      this.name = name1;
       this._label = _label;
       this._queue = [];
       this._label || (this._label = GmailApp.createLabel(this.name));
@@ -68,27 +70,27 @@ function labler() {
     }
 
     Label.prototype.queue = function(thread) {
-      if (__indexOf.call(this._queue, thread) < 0) {
+      if (indexOf.call(this._queue, thread) < 0) {
         return this._queue.push(thread);
       }
     };
 
     Label.prototype.apply = function() {
-      var t, threads, _i, _len, _ref, _ref1;
+      var j, len, ref, ref1, t, threads;
       threads = (function() {
-        var _i, _len, _ref, _results;
-        _ref = this._queue;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          t = _ref[_i];
-          _results.push(t._thread);
+        var j, len, ref, results;
+        ref = this._queue;
+        results = [];
+        for (j = 0, len = ref.length; j < len; j++) {
+          t = ref[j];
+          results.push(t._thread);
         }
-        return _results;
+        return results;
       }).call(this);
-      _ref = this._queue;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        t = _ref[_i];
-        if (_ref1 = t.id, __indexOf.call(Thread.done, _ref1) < 0) {
+      ref = this._queue;
+      for (j = 0, len = ref.length; j < len; j++) {
+        t = ref[j];
+        if (ref1 = t.id, indexOf.call(Thread.done, ref1) < 0) {
           Thread.done.push(t.id);
         }
       }
@@ -112,28 +114,28 @@ function labler() {
     Thread.doneKey = "octogas:v" + CACHE_VERSION + ":threads_done";
 
     Thread.loadFromSearch = function(query) {
-      var t, threads, _i, _len, _results;
+      var j, len, results, t, threads;
       threads = GmailApp.search(query);
       GmailApp.getMessagesForThreads(threads);
-      _results = [];
-      for (_i = 0, _len = threads.length; _i < _len; _i++) {
-        t = threads[_i];
-        _results.push(new Thread(t));
+      results = [];
+      for (j = 0, len = threads.length; j < len; j++) {
+        t = threads[j];
+        results.push(new Thread(t));
       }
-      return _results;
+      return results;
     };
 
     Thread.labelAllForReason = function() {
-      var id, _i, _len, _ref, _results;
-      _ref = this.ids;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        id = _ref[_i];
+      var id, j, len, ref, results;
+      ref = this.ids;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        id = ref[j];
         if (!this.all[id].alreadyDone()) {
-          _results.push(this.all[id].labelForReason());
+          results.push(this.all[id].labelForReason());
         }
       }
-      return _results;
+      return results;
     };
 
     Thread.loadDoneFromCache = function() {
@@ -145,22 +147,22 @@ function labler() {
     };
 
     Thread.dumpDoneToCache = function() {
-      return CACHE.put(this.doneKey, JSON.stringify(this.done));
+      return CACHE.put(this.doneKey, JSON.stringify(this.done), CACHE_EXPIRY);
     };
 
     Thread.archiveAll = function() {
       var id, threadsToArchive;
       threadsToArchive = (function() {
-        var _i, _len, _ref, _results;
-        _ref = this.ids;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          id = _ref[_i];
+        var j, len, ref, results;
+        ref = this.ids;
+        results = [];
+        for (j = 0, len = ref.length; j < len; j++) {
+          id = ref[j];
           if (!Thread.all[id].alreadyDone()) {
-            _results.push(Thread.all[id]._thread);
+            results.push(Thread.all[id]._thread);
           }
         }
-        return _results;
+        return results;
       }).call(this);
       return GmailApp.moveThreadsToArchive(threadsToArchive);
     };
@@ -172,14 +174,14 @@ function labler() {
       Thread.all[this.id] = this;
       Thread.ids.push(this.id);
       this.messages = (function() {
-        var _i, _len, _ref, _results;
-        _ref = this._thread.getMessages() || [];
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          m = _ref[_i];
-          _results.push(new Message(m));
+        var j, len, ref, results;
+        ref = this._thread.getMessages() || [];
+        results = [];
+        for (j = 0, len = ref.length; j < len; j++) {
+          m = ref[j];
+          results.push(new Message(m));
         }
-        return _results;
+        return results;
       }).call(this);
     }
 
@@ -239,28 +241,28 @@ function labler() {
     Message.keys = [];
 
     Message.loadReasonsFromCache = function() {
-      var k, reasons, _i, _len, _ref, _results;
+      var j, k, len, reasons, ref, results;
       reasons = CACHE.getAll(this.keys);
-      _ref = this.keys;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        k = _ref[_i];
-        _results.push(this.all[k].loadReason(reasons[k]));
+      ref = this.keys;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        k = ref[j];
+        results.push(this.all[k].loadReason(reasons[k]));
       }
-      return _results;
+      return results;
     };
 
     Message.dumpReasonsToCache = function() {
-      var k, reasons, _i, _len, _ref;
+      var j, k, len, reasons, ref;
       reasons = {};
-      _ref = this.keys;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        k = _ref[_i];
+      ref = this.keys;
+      for (j = 0, len = ref.length; j < len; j++) {
+        k = ref[j];
         if (this.all[k]._reason != null) {
           reasons[k] = JSON.stringify(this.all[k]._reason);
         }
       }
-      return CACHE.putAll(reasons);
+      return CACHE.putAll(reasons, CACHE_EXPIRY);
     };
 
     function Message(_message) {
@@ -319,8 +321,8 @@ function labler() {
     };
 
     Message.prototype.firstAddressInHeader = function(header) {
-      var _ref, _ref1;
-      return (_ref = this.headers()[header]) != null ? (_ref1 = _ref.match(/.*? <(.*)>/)) != null ? _ref1[1] : void 0 : void 0;
+      var ref, ref1;
+      return (ref = this.headers()[header]) != null ? (ref1 = ref.match(/.*? <(.*)>/)) != null ? ref1[1] : void 0 : void 0;
     };
 
     Message.prototype.firstNameInHeader = function(header) {
@@ -328,20 +330,20 @@ function labler() {
     };
 
     Message.prototype.headers = function() {
-      var key, line, match, parts, value, _i, _len, _ref, _ref1;
+      var j, key, len, line, match, parts, ref, ref1, value;
       if (this._headers == null) {
         this._headers = {};
         parts = this._message.getRawContent().split("\r\n\r\n", 2);
-        _ref = parts[0].split("\r\n");
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          line = _ref[_i];
+        ref = parts[0].split("\r\n");
+        for (j = 0, len = ref.length; j < len; j++) {
+          line = ref[j];
           if (match = line.match(/^\s+(.*)/)) {
             value += " " + match[1];
           } else {
             if ((typeof key !== "undefined" && key !== null) && (typeof value !== "undefined" && value !== null)) {
               this.setHeader(this._headers, key, value);
             }
-            _ref1 = line.split(": ", 2), key = _ref1[0], value = _ref1[1];
+            ref1 = line.split(": ", 2), key = ref1[0], value = ref1[1];
           }
         }
         if ((key != null) && (value != null)) {
@@ -378,13 +380,13 @@ function labler() {
     if (SHOULD_ARCHIVE) {
       Thread.archiveAll();
     }
-  } catch (_error) {
-    error = _error;
+  } catch (error1) {
+    error = error1;
     Logger.log(error);
   } finally {
     try {
       Label.applyAll();
-    } catch (_error) {
+    } catch (error2) {
       Logger.log(error);
     } finally {
       Thread.dumpDoneToCache();
