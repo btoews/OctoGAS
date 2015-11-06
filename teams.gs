@@ -37,6 +37,7 @@
       return "err";
     }
     response = UrlFetchApp.fetch("https://api.github.com/user/teams", {
+      muteHttpExceptions: true,
       headers: {
         Authorization: "token " + (githubService.getAccessToken())
       }
@@ -76,3 +77,5 @@
     githubService = getGitHubService();
     return githubService.reset();
   };
+
+
