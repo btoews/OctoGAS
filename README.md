@@ -34,4 +34,14 @@ You can also manually install OctoGAS by following the instructions in the [Hack
 
 Make your own copy of the Google Apps Script project by going [here](https://script.google.com/d/1yTtQ4bGlpsuv3lp0pWLmArzEbya4bvi_ABJ3Jn9NR8iDSAXZSwd3ynjh/edit) and selecting "File > Make Copy..." in the menu bar.
 
-You can build the source by running `script/compile`. The generated output in `labler.gs` and `muter.gs` can be coppied directly into a Google Apps Script.
+You can build the source by running `script/compile`. The generated output can be copied directly into a Google Apps Script project.
+
+After copying the project or copying the built artifacts into a new project, take the following steps to get it running:
+
+ - Register a [new OAuth application](https://github.com/settings/developers)
+ - Select the "**Resources**" menu, then "**Libraries...**". Add the OAuth2 library using this key: `1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF`. Use version 7. 
+ - In your GAS project, select "**File > Project Properties...**", and then the **Script Properties** tab. Add properties entitled `github_client_secret` & `github_client_id`and set them to the corresponding values from the OAuth application page that you just created. 
+ - Go back to the **Info** tab and copy the value for **Project key (Deprecated)**. You'll need this in a couple of places.
+ - Pull up the `teams.gs` file, and look for the line that begins `return OAuth2.createService` - examine this line for the call to `setProjectKey()`. Insert the aforementioned project key here.
+ - Go back to your OAuth app settings page on GitHub. Set the callback URL to `https://script.google.com/macros/d/<projectKey>/usercallback`. 
+ - You should now be ready to deploy the project as a web app, and go through the installation procedure.
