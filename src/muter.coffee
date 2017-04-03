@@ -51,7 +51,7 @@ class Thread
   #
   # Returns true if the operation was successful, false otherwise.
   unsubscribeAndUnmute: ->
-    !!(@unsubscribe() && @unmute())
+    !!(@unmute() && @unsubscribe())
 
   # Unsubscribe from the issue/PR on GitHub.com.
   #
