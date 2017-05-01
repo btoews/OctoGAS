@@ -26,7 +26,7 @@ authCallback = (req) ->
 
 # Install trigger by name.
 installTrigger = (name) ->
-  ScriptApp.newTrigger(name).timeBased().everyMinutes(10).create()
+  ScriptApp.newTrigger(name).timeBased().everyMinutes(20).create()
 
 # Uninstall a trigger by name.
 uninstallTrigger = (name) ->

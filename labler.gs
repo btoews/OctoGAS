@@ -1,5 +1,5 @@
 function labler() {
-  var BASE_LABEL, CACHE, CACHE_EXPIRY, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, SHOULD_ARCHIVE, Thread, error, error1, error2,
+  var BASE_LABEL, CACHE, CACHE_EXPIRY, CACHE_VERSION, Label, MY_TEAMS, MY_TEAMS_REGEX, Message, QUERY, SHOULD_ARCHIVE, Thread, error,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   MY_TEAMS = fetchCachedGitHubTeamSlugs() !== "err" ? fetchCachedGitHubTeamSlugs() : [];
@@ -386,7 +386,7 @@ function labler() {
   } finally {
     try {
       Label.applyAll();
-    } catch (error2) {
+    } catch (error1) {
       Logger.log(error);
     } finally {
       Thread.dumpDoneToCache();

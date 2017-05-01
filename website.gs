@@ -26,7 +26,7 @@
   };
 
   function installTrigger(name) {
-    return ScriptApp.newTrigger(name).timeBased().everyMinutes(10).create();
+    return ScriptApp.newTrigger(name).timeBased().everyMinutes(20).create();
   };
 
   function uninstallTrigger(name) {
