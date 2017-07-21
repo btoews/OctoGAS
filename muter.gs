@@ -50,7 +50,7 @@ function muter() {
     }
 
     Thread.prototype.unsubscribeAndUnmute = function() {
-      return !!(this.unsubscribe() && this.unmute());
+      return !!(this.unmute() && this.unsubscribe());
     };
 
     Thread.prototype.unsubscribe = function() {
